@@ -23,6 +23,12 @@ public:
 	TAPTriangle(TAPVertex va, TAPVertex vb, TAPVertex vc);
 
 	/**
+	* Metodo para obtener la normal del triangulo a partir de sus vertices
+	*/
+
+	TAPVertex normal();
+
+	/**
 	* Metodos Gets y Sets de cada variable / de la clase
 	*/
 

@@ -8,7 +8,7 @@ TAPVertex::TAPVertex() {
 	z = 0;
 }
 
-TAPVertex::TAPVertex(float aa, float bb, float cc) {
+TAPVertex::TAPVertex(float aa, float bb, float cc){
 	x = aa;
 	y = bb;
 	z = cc;
@@ -25,7 +25,7 @@ void TAPVertex::drawObjectC(float R, float G, float B) {
 	glColor3f(R, G, B);
 	glPointSize(4.0f + size);
 	glBegin(GL_POINTS);
-	glVertex3d(x, y, z);
+		glVertex3d(x, y, z);
 	glEnd();
 
 }
