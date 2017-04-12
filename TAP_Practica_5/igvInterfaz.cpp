@@ -4,6 +4,8 @@
 #include <glui.h>
 
 #include "igvInterfaz.h"
+#include "TAPMesh.h"
+
 
 extern igvInterfaz interfaz; // los callbacks deben ser estaticos y se requiere este objeto para acceder desde
 							 // ellos a las variables de la clase

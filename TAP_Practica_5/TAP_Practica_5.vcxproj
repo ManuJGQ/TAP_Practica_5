@@ -131,7 +131,6 @@
     <ClCompile Include="igvPunto3D.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TAPBezier.cpp" />
-    <ClCompile Include="TAPFace.cpp" />
     <ClCompile Include="TAPLinearInterpolation.cpp" />
     <ClCompile Include="TAPMesh.cpp" />
     <ClCompile Include="TAPMotionController.cpp" />
@@ -150,7 +149,6 @@
     <ClInclude Include="igvMaterial.h" />
     <ClInclude Include="igvPunto3D.h" />
     <ClInclude Include="TAPBezier.h" />
-    <ClInclude Include="TAPFace.h" />
     <ClInclude Include="TAPLinearInterpolation.h" />
     <ClInclude Include="TAPMesh.h" />
     <ClInclude Include="TAPMotionController.h" />

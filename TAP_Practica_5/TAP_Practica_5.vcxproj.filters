@@ -63,9 +63,6 @@
     <ClCompile Include="TAPTriangle.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="TAPFace.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
     <ClCompile Include="TAPMesh.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
@@ -114,9 +111,6 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="TAPTriangle.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="TAPFace.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="TAPMesh.h">
