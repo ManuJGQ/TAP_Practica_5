@@ -162,6 +162,9 @@
     <Text Include="bezier.txt" />
     <Text Include="sphericalInterpolation.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Object Include="vader.obj" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

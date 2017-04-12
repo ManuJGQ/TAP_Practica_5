@@ -125,4 +125,9 @@
       <Filter>Archivos de recursos</Filter>
     </Text>
   </ItemGroup>
+  <ItemGroup>
+    <Object Include="vader.obj">
+      <Filter>Archivos de recursos</Filter>
+    </Object>
+  </ItemGroup>
 </Project>
