@@ -53,6 +53,8 @@ igvInterfaz::igvInterfaz() {
 	pintarBezier = true;
 
 	anaglifo = true;
+
+	vader = TAPHumanoid("vader.obj", "vaderskeleton.txt");
 }
 
 igvInterfaz::~igvInterfaz() {}
@@ -84,7 +86,7 @@ void igvInterfaz::configura_entorno(int argc, char** argv,
 
 
 	glEnable(GL_DEPTH_TEST); // activa el ocultamiento de superficies por z-buffer
-	glClearColor(0.0, 0.0, 0.0, 0.0); // establece el color de fondo de la ventana
+	glClearColor(1.0, 1.0, 1.0, 0.0); // establece el color de fondo de la ventana
 
 	glEnable(GL_LIGHTING); // activa la iluminacion de la escena
 	glEnable(GL_NORMALIZE); // normaliza los vectores normales para calculo iluminacion
@@ -193,7 +195,7 @@ void igvInterfaz::set_glutReshapeFunc(int w, int h) {
 
 	// establece los parámetros de la cámara y de la proyección
 	interfaz.camara.aplicar(0);
-	interfaz.camara.aplicar(1);
+	//interfaz.camara.aplicar(1);
 }
 
 void igvInterfaz::set_glutDisplayFunc() {
@@ -201,43 +203,50 @@ void igvInterfaz::set_glutDisplayFunc() {
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // borra la ventana y el z-buffer
 
-	for (int i = 0; i < 2; i++) {
+	//for (int i = 0; i < 2; i++) {
 
-		glClear(GL_DEPTH_BUFFER_BIT);
+	//	glClear(GL_DEPTH_BUFFER_BIT);
 
-		// se establece el viewport
-		if (interfaz.anaglifo)glViewport(0, 0, interfaz.get_ancho_ventana() , interfaz.get_alto_ventana());
-		else {
-			if (i == 0) {
-				glViewport(0, 0, interfaz.get_ancho_ventana() / 2, interfaz.get_alto_ventana());
-			} else {
-				glViewport(interfaz.get_ancho_ventana() / 2, 0, interfaz.get_ancho_ventana() / 2, interfaz.get_alto_ventana());
-			}
-		}
+	glViewport(0, 0, interfaz.get_ancho_ventana(), interfaz.get_alto_ventana());
+
+	//	// se establece el viewport
+	//	if (interfaz.anaglifo)glViewport(0, 0, interfaz.get_ancho_ventana() , interfaz.get_alto_ventana());
+	//	else {
+	//		if (i == 0) {
+	//			glViewport(0, 0, interfaz.get_ancho_ventana() / 2, interfaz.get_alto_ventana());
+	//		} else {
+	//			glViewport(interfaz.get_ancho_ventana() / 2, 0, interfaz.get_ancho_ventana() / 2, interfaz.get_alto_ventana());
+	//		}
+	//	}
+
+	interfaz.camara.aplicar(0);
+	//	// aplica las transformaciones en función de los parámetros de la cámara y del modo (visualización o selección)
+	//	
+
+	//	if (i == 0) {
+	//		interfaz.camara.aplicar(0);
+	//		if(interfaz.anaglifo)glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_FALSE);
+	//	}
+	//	else {
+	//		interfaz.camara.aplicar(1);
+	//		if (interfaz.anaglifo)glColorMask(GL_FALSE, GL_FALSE, GL_TRUE, GL_FALSE);
+	//	}
+
+	//	if (interfaz.pintarBezier)interfaz.bezier.pintarCurva();
+	//	else interfaz.velocidad.pintarCurva();
+
+	//	// visualiza la escena
+	//	interfaz.escena.visualizar();
+
+	//	if (interfaz.anaglifo)glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+	//}
+	glEnable(GL_CULL_FACE);
 
 
-		// aplica las transformaciones en función de los parámetros de la cámara y del modo (visualización o selección)
-		
+	glCullFace(GL_BACK);
 
-		if (i == 0) {
-			interfaz.camara.aplicar(0);
-			if(interfaz.anaglifo)glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_FALSE);
-		}
-		else {
-			interfaz.camara.aplicar(1);
-			if (interfaz.anaglifo)glColorMask(GL_FALSE, GL_FALSE, GL_TRUE, GL_FALSE);
-		}
-
-		if (interfaz.pintarBezier)interfaz.bezier.pintarCurva();
-		else interfaz.velocidad.pintarCurva();
-
-		// visualiza la escena
-		interfaz.escena.visualizar();
-
-		if (interfaz.anaglifo)glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-	}
-
-
+	interfaz.vader.drawObjectC(0.0f, 0.0f, 0.0f);
+	glDisable(GL_CULL_FACE);
 	// refresca la ventana
 	glutSwapBuffers();
 
@@ -245,10 +254,10 @@ void igvInterfaz::set_glutDisplayFunc() {
 
 void igvInterfaz::set_glutMouseFunc(GLint boton, GLint estado, GLint x, GLint y) {
 	if (boton == 3) {
-		interfaz.camara.zoom(10);
+		interfaz.camara.zoom(30);
 	}
 	if (boton == 4) {
-		interfaz.camara.zoom(-10);
+		interfaz.camara.zoom(-30);
 	}
 
 	glutPostRedisplay();
@@ -297,15 +306,6 @@ void igvInterfaz::set_glutIdleFunc() {
 
 		glutPostRedisplay();
 	}
-}
-
-void igvInterfaz::escribir(char *st, int x, int y) {
-	glColor3f(0.0, 0.0, 0.0);
-	glRasterPos2f(x, y);
-	for (int i = 0; i < strlen(st); i++) {
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, st[i]);
-	}
-
 }
 
 void igvInterfaz::inicializa_callbacks() {

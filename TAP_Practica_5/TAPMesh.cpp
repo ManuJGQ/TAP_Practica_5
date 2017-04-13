@@ -6,6 +6,12 @@ TAPMesh::TAPMesh(){
 	setNormal = false;
 }
 
+TAPMesh::TAPMesh(std::vector<TAPVertex> _vertices, std::vector<TAPFace> _caras){
+	caras = _caras;
+	vertices = _vertices;
+	setNormales();
+}
+
 std::vector<TAPTriangle> TAPMesh::getTriangulos() {
 	std::vector<TAPTriangle> triangulos = std::vector<TAPTriangle>();
 	for (int i = 0; i < caras.size(); i++) {

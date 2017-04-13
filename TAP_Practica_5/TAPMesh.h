@@ -57,87 +57,6 @@ class TAPMesh{
 
 	bool setNormal;
 
-	/**
-	* Construye una mesh a partir de un fichero Obj
-	*
-	* @param filename: nombre del objeto
-	* @throws IOException
-	*/
-	/*public Mesh(String filename) throws IOException {
-		caras = new ArrayList<Face>();
-		vertices = new ArrayList<Vect3d>();
-		setNormal = false;
-		String obj = "obj";
-
-		File archivo;
-		FileReader fr;
-		BufferedReader reader;
-
-		archivo = new File(filename);
-		fr = new FileReader(archivo);
-		reader = new BufferedReader(fr);
-
-		String extension = filename.substring(filename.lastIndexOf(".") + 1, filename.length());
-		if (!extension.equals(obj)) {
-			System.out.println("Solo se soportan modelos en obj ");
-		}
-		else {
-			loadobject(reader);
-			setNormales();
-			setNormal = true;
-		}
-	}*/
-
-	/**
-	* carga el modelo de la variable fichero
-	*
-	* @param br variable fichero
-	*/
-	/*public void loadobject(BufferedReader br) {
-		String line = "";
-
-		try {
-			while ((line = br.readLine()) != null) {
-				line = line.trim();
-				line = line.replaceAll("  ", " ");
-				if (line.length() > 0) {
-					if (line.startsWith("v ")) {
-						float[] vert = read3Floats(line);
-						Vect3d punto = new Vect3d(vert[0], vert[1], vert[2]);
-						vertices.add(punto);
-					}
-					else if (line.startsWith("vt")) {
-
-						continue;
-
-					}
-					else if (line.startsWith("vn")) {
-
-						continue;
-					}
-					else if (line.startsWith("f ")) {
-						int[] faces = read3Integer(line);
-						caras.add(new Face(faces));
-					}
-					else if (line.startsWith("g ")) {
-						continue;
-					}
-					else if (line.startsWith("usemtl")) {
-						continue;
-					}
-					else if (line.startsWith("mtllib")) {
-						continue;
-					}
-				}
-			}
-		}
-		catch (Exception e) {
-			System.out.println("GL_OBJ_Reader.loadObject() failed at line: " + line);
-		}
-
-		System.out.println("Lector de Obj: vértices " + vertices.size() + " caras " + caras.size());
-
-	}*/
 
 public:
 
@@ -146,6 +65,7 @@ public:
 	*/
 
 	TAPMesh();
+	TAPMesh(std::vector<TAPVertex> _vertices, std::vector<TAPFace> _caras);
 	
 	/**
 	* Metodos Gets y Sets de cada variable / de la clase
@@ -187,9 +107,9 @@ public:
 
 		glColor3f(R, G, B);
 		glBegin(GL_TRIANGLES);
-		glVertex3d((float)getVertice(caras[i].getV1() - 1).getX(), (float)getVertice(caras[i].getV1() - 1).getY(), (float)getVertice(caras[i].getV1() - 1).getZ());
-		glVertex3d((float)getVertice(caras[i].getV2() - 1).getX(), (float)getVertice(caras[i].getV2() - 1).getY(), (float)getVertice(caras[i].getV2() - 1).getZ());
-		glVertex3d((float)getVertice(caras[i].getV3() - 1).getX(), (float)getVertice(caras[i].getV3() - 1).getY(), (float)getVertice(caras[i].getV3() - 1).getZ());
+			glVertex3d((float)getVertice(caras[i].getV1() - 1).getX(), (float)getVertice(caras[i].getV1() - 1).getY(), (float)getVertice(caras[i].getV1() - 1).getZ());
+			glVertex3d((float)getVertice(caras[i].getV2() - 1).getX(), (float)getVertice(caras[i].getV2() - 1).getY(), (float)getVertice(caras[i].getV2() - 1).getZ());
+			glVertex3d((float)getVertice(caras[i].getV3() - 1).getX(), (float)getVertice(caras[i].getV3() - 1).getY(), (float)getVertice(caras[i].getV3() - 1).getZ());
 		glEnd();
 	}
 

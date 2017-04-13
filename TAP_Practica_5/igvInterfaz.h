@@ -11,6 +11,7 @@
 #include "TAPSphericalInterpolation.h"
 #include "TAPMotionController.h"
 #include "TAPStereoscopicCamera.h"
+#include "TAPHumanoid.h"
 
 using namespace std;
 
@@ -22,6 +23,9 @@ typedef enum {
 class igvInterfaz {
 	float pt;
 	Punto puntoActual;
+
+	//Humanoide
+	TAPHumanoid vader;
 
 	//Bezier
 	TAPBezier bezier;
@@ -102,8 +106,6 @@ public:
 	void inicializa_callbacks(); // inicializa todas los callbacks
 
 	void inicia_bucle_visualizacion(); // visualiza la escena y espera a eventos sobre la interfaz
-
-	void escribir(char *st, int x, int y);
 
 	// métodos get_ y set_ de acceso a los atributos
 	int get_ancho_ventana() { return ancho_ventana; };

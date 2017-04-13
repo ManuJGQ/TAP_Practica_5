@@ -66,6 +66,9 @@
     <ClCompile Include="TAPMesh.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="TAPHumanoid.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="igvCamara.h">
@@ -116,6 +119,9 @@
     <ClInclude Include="TAPMesh.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="TAPHumanoid.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="bezier.txt">
@@ -124,10 +130,8 @@
     <Text Include="sphericalInterpolation.txt">
       <Filter>Archivos de recursos</Filter>
     </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="vader.obj">
+    <Text Include="vaderskeleton.txt">
       <Filter>Archivos de recursos</Filter>
-    </Object>
+    </Text>
   </ItemGroup>
 </Project>
