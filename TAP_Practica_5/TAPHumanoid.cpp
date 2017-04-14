@@ -5,8 +5,10 @@
 #include <iostream>
 
 TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton){
-	luz = igvFuenteLuz(GL_LIGHT0, igvPunto3D(25, 25, 25), igvColor(0.5, 0.5, 0.5, 0.5), igvColor(0.5, 0.5, 0.5, 0.5), igvColor(0.5, 0.5, 0.5, 0.5), 1.0, 0.0, 0.0, igvPunto3D(-25, -25, -25), 12.0, 50);
-	material = igvMaterial(igvColor(1, 1, 1), igvColor(1, 1, 1), igvColor(1, 1, 1), 120);
+	luz = igvFuenteLuz(GL_LIGHT0, igvPunto3D(5.0, 5.0, 0.0), igvColor(0.0, 0.0, 0.0, 1.0), igvColor(1.0, 1.0, 1.0, 1.0), igvColor(1.0, 1.0, 1.0, 1.0), 1.0, 0.0, 0.0);
+	//luz2 = igvFuenteLuz(GL_LIGHT1, igvPunto3D(-60.0, 90.0, 0.0), igvColor(1, 1, 1, 1), igvColor(1, 1, 1, 1), igvColor(1, 1, 1, 1), 0.1f, 0.125f, 0.075f);
+	//luz3 = igvFuenteLuz(GL_LIGHT2, igvPunto3D(30.0, 90.0, -90.0), igvColor(1, 1, 1, 1), igvColor(1, 1, 1, 1), igvColor(1, 1, 1, 1), 0.1f, 0.125f, 0.075f);
+	material = igvMaterial(igvColor(0.75, 0.75, 0.75), igvColor(0.5, 0.75, 0.75), igvColor(0.5, 1.0, 1.0), 120);
 	
 	luz.encender();
 
@@ -99,6 +101,8 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton){
 	int r1 = 0;
 	int r2 = 0;
 
+	count = 0;
+
 	while (!archivo.eof()) {
 
 		archivo >> joint >> hijos >> rotacion >> root;
@@ -144,6 +148,9 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton){
 			rootJoint = stoi(joint);
 		}
 
+		joints.push_back(TAPJoint(meshs[count], _children, axis, r1, r2));
+		count++;
+
 	}
 	archivo.close();
 
@@ -151,10 +158,16 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton){
 
 void TAPHumanoid::drawObjectC(float R, float G, float B){
 	glPushMatrix();
-	/*luz.aplicar();
-	material.aplicar();*/
+	luz.aplicar();
+	//material.aplicar();
 	for (int i = 0; i < joints.size(); i++) {
-		joints[i].drawObjectC(R, G, B);
+		float r = (float)i / (float)joints.size();
+		float g = (float)i / (float)joints.size();
+		float b = (float)i / (float)joints.size();
+		std::cout << r << " " << g << " " << b << std::endl;
+		//if (i == 3)glRotatef(20, 1, 0, 0);
+		if (i == 13)glRotatef(20, 1, 0, 0);
+		joints[i].drawObjectC(r, g, b);
 	}
 	glPopMatrix();
 }

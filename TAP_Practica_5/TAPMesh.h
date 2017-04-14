@@ -105,7 +105,8 @@ public:
 
 	void drawFace(int i, float R, float G, float B) {
 
-		glColor3f(R, G, B);
+		GLfloat color[] = { R, G, B };
+		glMaterialfv(GL_FRONT, GL_EMISSION, color);
 		glBegin(GL_TRIANGLES);
 			glVertex3d((float)getVertice(caras[i].getV1() - 1).getX(), (float)getVertice(caras[i].getV1() - 1).getY(), (float)getVertice(caras[i].getV1() - 1).getZ());
 			glVertex3d((float)getVertice(caras[i].getV2() - 1).getX(), (float)getVertice(caras[i].getV2() - 1).getY(), (float)getVertice(caras[i].getV2() - 1).getZ());

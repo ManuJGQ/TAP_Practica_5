@@ -16,6 +16,8 @@ class TAPJoint {
 	int rotationLimit1;
 	int rotationLimit2;
 
+	int rotacion;
+
 public:
 	TAPJoint() {};
 	TAPJoint(TAPMesh _mesh, std::vector<int> _children, char _axis, int r1, int r2) {
@@ -25,6 +27,11 @@ public:
 		rotationLimit1 = r1;
 		rotationLimit2 = r2;
 	};
+
+	void setRotacion(int rot) { rotacion = rot; }
+	void aplicarRotacion() {
+
+	}
 
 	/**
 	* Funcion encargada de pintar la malla
@@ -43,6 +50,8 @@ class TAPHumanoid {
 	int rootJoint;
 
 	igvFuenteLuz luz;
+	igvFuenteLuz luz2;
+	igvFuenteLuz luz3;
 	igvMaterial material;
 
 public:

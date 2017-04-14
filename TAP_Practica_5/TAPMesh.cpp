@@ -119,7 +119,6 @@ int TAPMesh::getSizeVertices() {
 }
 
 void TAPMesh::drawObjectC(float R, float G, float B) {
-	glColor3f(R, G, B);
 	for (int i = 0; i < getSizeCaras(); i++) {
 		drawFace(i, R, G, B);
 	}

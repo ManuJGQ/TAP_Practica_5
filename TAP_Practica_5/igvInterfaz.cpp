@@ -259,7 +259,9 @@ void igvInterfaz::set_glutMouseFunc(GLint boton, GLint estado, GLint x, GLint y)
 	if (boton == 4) {
 		interfaz.camara.zoom(-30);
 	}
-
+	if (boton == 1) {
+		interfaz.camara.zoom(30);
+	}
 	glutPostRedisplay();
 }
 
