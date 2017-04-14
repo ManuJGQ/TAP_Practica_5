@@ -94,27 +94,59 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton){
 	if (!archivo.good()) throw std::string("ERROR opening the file");
 
 	std::string joint, hijos, rotacion, root;
+	std::vector<int> _children;
+	char axis = '-';
+	int r1 = 0;
+	int r2 = 0;
 
 	while (!archivo.eof()) {
 
 		archivo >> joint >> hijos >> rotacion >> root;
+		_children = std::vector<int>();
 
 		if (hijos != "-") {
-			std::cout << hijos << std::endl;
+			int coma;
+			int h;
+			while (!hijos.empty()) {
+				coma = hijos.find(',');
+				if (coma != std::string::npos) {
+					h = stoi(hijos.substr(0, coma));
+					hijos = hijos.substr(coma + 1, hijos.size());
+					std::cout << h << " - " << hijos << std::endl;
+					_children.push_back(h);
+				}
+				else {
+					h = stoi(hijos);
+					hijos = "";
+					_children.push_back(h);
+				}
+			}
 		}
 
 		if (rotacion != "-") {
-			std::cout << rotacion << std::endl;
+			int coma;
+			coma = rotacion.find(',');
+
+			axis = *(rotacion.substr(0, coma)).c_str();
+			rotacion = rotacion.substr(coma + 1, rotacion.size());
+
+			coma = rotacion.find(',');
+
+			r1 = stoi(rotacion.substr(0, coma));
+			rotacion = rotacion.substr(coma + 1, rotacion.size());
+
+			r2 = stoi(rotacion);
+
+			std::cout << axis << " - " << r1 << " - " << r2 << std::endl;
 		}
 
 		if (root != "-") {
-			std::cout << root << std::endl;
+			rootJoint = stoi(joint);
 		}
 
 	}
 	archivo.close();
 
-	rootJoint = 0;
 }
 
 void TAPHumanoid::drawObjectC(float R, float G, float B){

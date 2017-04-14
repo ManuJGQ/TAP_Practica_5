@@ -18,9 +18,12 @@ class TAPJoint {
 
 public:
 	TAPJoint() {};
-	TAPJoint(TAPMesh _mesh) {
+	TAPJoint(TAPMesh _mesh, std::vector<int> _children, char _axis, int r1, int r2) {
 		mesh = _mesh;
-		children = std::vector<int>();
+		children = _children;
+		rotationAxis = _axis;
+		rotationLimit1 = r1;
+		rotationLimit2 = r2;
 	};
 
 	/**
