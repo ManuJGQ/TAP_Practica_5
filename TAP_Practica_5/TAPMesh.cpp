@@ -6,9 +6,10 @@ TAPMesh::TAPMesh(){
 	setNormal = false;
 }
 
-TAPMesh::TAPMesh(std::vector<TAPVertex> _vertices, std::vector<TAPFace> _caras){
+TAPMesh::TAPMesh(std::vector<TAPVertex> _vertices, std::vector<TAPFace> _caras, TAPVertex _posCentral){
 	caras = _caras;
 	vertices = _vertices;
+	posCentral = _posCentral;
 	setNormales();
 }
 
@@ -120,7 +121,11 @@ int TAPMesh::getSizeVertices() {
 
 void TAPMesh::drawObjectC(float R, float G, float B) {
 	for (int i = 0; i < getSizeCaras(); i++) {
-		drawFace(i, R, G, B);
+		glPushMatrix();
+		GLfloat color[] = { R, G, B };
+		glMaterialfv(GL_FRONT, GL_EMISSION, color);
+		drawFace(i);
+		glPopMatrix();
 	}
 }
 

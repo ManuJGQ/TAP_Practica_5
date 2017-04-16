@@ -86,7 +86,7 @@ void igvInterfaz::configura_entorno(int argc, char** argv,
 
 
 	glEnable(GL_DEPTH_TEST); // activa el ocultamiento de superficies por z-buffer
-	glClearColor(1.0, 1.0, 1.0, 0.0); // establece el color de fondo de la ventana
+	glClearColor(1.0, 1.0, 1.0, 1.0); // establece el color de fondo de la ventana
 
 	glEnable(GL_LIGHTING); // activa la iluminacion de la escena
 	glEnable(GL_NORMALIZE); // normaliza los vectores normales para calculo iluminacion
@@ -142,12 +142,12 @@ void igvInterfaz::set_glutKeyboardFunc(unsigned char key, int x, int y) {
 		break;
 	case 'X':
 		interfaz.tc += 0.5;
-		//interfaz.camara.set_tc(interfaz.tc);
+		interfaz.camara.set_tc(interfaz.tc);
 		interfaz.camara.set(interfaz.get_vistas(interfaz.i), igvPunto3D(0, 0, 0), interfaz.get_va(), interfaz.tc);
 		break;
 	case 'x':
 		interfaz.tc -= 0.5;
-		//interfaz.camara.set_tc(interfaz.tc);
+		interfaz.camara.set_tc(interfaz.tc);
 		interfaz.camara.set(interfaz.get_vistas(interfaz.i), igvPunto3D(0, 0, 0), interfaz.get_va(), interfaz.tc);
 		break;
 	case 'Z':
@@ -240,13 +240,9 @@ void igvInterfaz::set_glutDisplayFunc() {
 
 	//	if (interfaz.anaglifo)glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 	//}
-	glEnable(GL_CULL_FACE);
-
-
-	glCullFace(GL_BACK);
 
 	interfaz.vader.drawObjectC(0.0f, 0.0f, 0.0f);
-	glDisable(GL_CULL_FACE);
+
 	// refresca la ventana
 	glutSwapBuffers();
 
