@@ -140,7 +140,7 @@ void igvInterfaz::set_glutKeyboardFunc(unsigned char key, int x, int y) {
 			interfaz.velocidad.set_K2(-0.05);
 		}
 		break;
-	case 'X':
+	/*case 'X':
 		interfaz.tc += 0.5;
 		interfaz.camara.set_tc(interfaz.tc);
 		interfaz.camara.set(interfaz.get_vistas(interfaz.i), igvPunto3D(0, 0, 0), interfaz.get_va(), interfaz.tc);
@@ -163,10 +163,10 @@ void igvInterfaz::set_glutKeyboardFunc(unsigned char key, int x, int y) {
 		interfaz.vistas[3].set(0, 0, interfaz.d0 + 2);
 		interfaz.camara.set_d0(interfaz.d0);
 		interfaz.camara.set(interfaz.get_vistas(interfaz.i), igvPunto3D(0, 0, 0), interfaz.get_va(), interfaz.tc);
-		break;
+		break;*/
 	case 'M':
 	case 'm': 
-		interfaz.set_anaglifo(interfaz.get_anaglifo() ? false : true);
+		if(!interfaz.vader.andar)interfaz.vader.saltar = !interfaz.vader.saltar;
 		break;
 	case 'A':
 	case 'a': // activa/desactiva la animación de la escena
@@ -175,7 +175,7 @@ void igvInterfaz::set_glutKeyboardFunc(unsigned char key, int x, int y) {
 		break;
 	case 'B':
 	case 'b':
-		interfaz.pintarBezier = (interfaz.pintarBezier ? false : true);
+		if(!interfaz.vader.saltar)interfaz.vader.andar = !interfaz.vader.andar;
 		break;
 	case 'e': // activa/desactiva la visualizacion de los ejes
 		interfaz.escena.set_ejes(interfaz.escena.get_ejes() ? false : true);
@@ -264,43 +264,43 @@ void igvInterfaz::set_glutMouseFunc(GLint boton, GLint estado, GLint x, GLint y)
 void igvInterfaz::set_glutIdleFunc() {
 	// incluir el código para animar el modelo de la manera más realista posible
 	if (interfaz.animacion) {
-		/***************************************************************
-		*		     INTERPOLACION MOVIMIENTO & DEFORMACION			   *
-		***************************************************************/
-		
-		Punto nuevoPunto = interfaz.movController.get_Punto(interfaz.pt);
+		///***************************************************************
+		//*		     INTERPOLACION MOVIMIENTO & DEFORMACION			   *
+		//***************************************************************/
+		//
+		//Punto nuevoPunto = interfaz.movController.get_Punto(interfaz.pt);
 
-		interfaz.twist = interfaz.movController.get_Twist(interfaz.pt);
+		//interfaz.twist = interfaz.movController.get_Twist(interfaz.pt);
 
-		interfaz.pt += 0.01f;
-		if (interfaz.pt >= 1.0f) {
-			interfaz.pt = 0.0f;
-		}
+		//interfaz.pt += 0.01f;
+		//if (interfaz.pt >= 1.0f) {
+		//	interfaz.pt = 0.0f;
+		//}
 
-		/*std::cout << interfaz.pt << std::endl;
-		std::cout << nuevoPunto.x << " " << nuevoPunto.y << " " << nuevoPunto.z << std::endl;*/
+		///*std::cout << interfaz.pt << std::endl;
+		//std::cout << nuevoPunto.x << " " << nuevoPunto.y << " " << nuevoPunto.z << std::endl;*/
 
-		Punto movimiento;
-		movimiento.x = nuevoPunto.x - interfaz.puntoActual.x;
-		movimiento.y = nuevoPunto.y - interfaz.puntoActual.y;
-		movimiento.z = nuevoPunto.z - interfaz.puntoActual.z;
+		//Punto movimiento;
+		//movimiento.x = nuevoPunto.x - interfaz.puntoActual.x;
+		//movimiento.y = nuevoPunto.y - interfaz.puntoActual.y;
+		//movimiento.z = nuevoPunto.z - interfaz.puntoActual.z;
 
-		/*std::cout << "--------------------------------------------------------" << std::endl;
-		std::cout << interfaz.puntoActual.x << " " << interfaz.puntoActual.y << " " << interfaz.puntoActual.z << std::endl;*/
+		///*std::cout << "--------------------------------------------------------" << std::endl;
+		//std::cout << interfaz.puntoActual.x << " " << interfaz.puntoActual.y << " " << interfaz.puntoActual.z << std::endl;*/
 
-		interfaz.puntoActual = nuevoPunto;
+		//interfaz.puntoActual = nuevoPunto;
 
-		//std::cout << nuevoPunto.x << " " << nuevoPunto.y << " " << nuevoPunto.z << std::endl;
-		//std::cout << movimiento.x << " " << movimiento.y << " " << movimiento.z << std::endl;
+		////std::cout << nuevoPunto.x << " " << nuevoPunto.y << " " << nuevoPunto.z << std::endl;
+		////std::cout << movimiento.x << " " << movimiento.y << " " << movimiento.z << std::endl;
 
-		//std::cout << interfaz.twist << std::endl;
+		////std::cout << interfaz.twist << std::endl;
 
-		interfaz.escena.setMovimiento(nuevoPunto);
-		interfaz.escena.setTwist(interfaz.twist * 0.7f);
+		//interfaz.escena.setMovimiento(nuevoPunto);
+		//interfaz.escena.setTwist(interfaz.twist * 0.7f);
 
-		Quaternion nuevoGiro = interfaz.sphericalInterpolation.getPosicionInterpolada(interfaz.twist * interfaz.sphericalInterpolation.getUltimoT());
+		//Quaternion nuevoGiro = interfaz.sphericalInterpolation.getPosicionInterpolada(interfaz.twist * interfaz.sphericalInterpolation.getUltimoT());
 
-		interfaz.escena.setGiro(nuevoGiro);
+		//interfaz.escena.setGiro(nuevoGiro);
 
 		glutPostRedisplay();
 	}

@@ -11,6 +11,7 @@ class TAPJoint {
 
 	TAPMesh mesh;
 	std::vector<int> children;
+	std::vector<TAPJoint*> joints;
 
 	int rotationLimit1;
 	int rotationLimit2;
@@ -18,6 +19,8 @@ class TAPJoint {
 	int rotacion;
 
 	float R, G, B;
+
+	int x = 0, y = 0, z = 0;
 
 public:
 	char rotationAxis;
@@ -33,44 +36,51 @@ public:
 		R = r;
 		G = g;
 		B = b;
+		if (rotationAxis == 'X')x++;
+		if (rotationAxis == 'Y')y++;
+		if (rotationAxis == 'Z')z++;
 	};
 
-	int childrenSize() { return children.size(); }
-	int getChildren(int i) { return children[i]; }
-
+	void setJoints(std::vector<TAPJoint*> _joints) { joints = _joints; }
 
 	bool aplicarRotacion(int i, int r) {
 		int rot = rotacion + r;
-		std::cout << rot << " - " << rotationLimit1 << " - " << rotationLimit2 << std::endl;
-			if (rot >= rotationLimit2 && rot <= rotationLimit1) {
-				rotacion = rot;
-				int x = 0, y = 0, z = 0;
-				if (rotationAxis == 'X')x++;
-				if (rotationAxis == 'Y')y++;
-				if (rotationAxis == 'Z')z++;
-				mesh.rotar(i, x, y, z, r, R, G, B);
-				return true;
+		if (rot >= rotationLimit2 && rot <= rotationLimit1) {
+			rotacion = rot;
+			mesh.rotar(i, x, y, z, rotacion, R, G, B);
+			for (int j = 0; j < children.size(); j++) {
+				joints[children[j]]->aplicarRotacionPadre(i, x, y, z, rotacion);
 			}
-			else {
-				int x = 0, y = 0, z = 0;
-				if (rotationAxis == 'X')x++;
-				if (rotationAxis == 'Y')y++;
-				if (rotationAxis == 'Z')z++;
-				mesh.rotar(i, x, y, z, r, R, G, B);
-				return false;
+			return true;
+		}
+		else {
+			mesh.rotar(i, x, y, z, rotacion, R, G, B);
+			for (int j = 0; j < children.size(); j++) {
+				joints[children[j]]->aplicarRotacionPadre(i, x, y, z, rotacion);
 			}
+			return false;
+		}
 	}
 
-	bool aplicarRotacionPadre(int i, int x, int y, int z, int r) {
+	void aplicarRotacionPadre(int i, int x, int y, int z, int r) {
 		mesh.rotar(i, x, y, z, r, R, G, B);
-		return children.size();
+		for (int j = 0; j < children.size(); j++) {
+			joints[children[j]]->aplicarRotacionPadre(i, x, y, z, r);
+		}
+	}
+
+	void aplicarTraslacion(int x, int y, int z) {
+		glTranslatef(x, y, z);
+		for (int j = 0; j < children.size(); j++) {
+			joints[children[j]]->aplicarTraslacion(x, y, z);
+		}
 	}
 
 	/**
 	* Funcion encargada de pintar la malla
 	*/
 
-	void drawObjectC(float R, float G, float B) {
+	void drawObjectC() {
 		mesh.drawObjectC(R, G, B);
 	};
 
@@ -87,16 +97,16 @@ class TAPHumanoid {
 	igvFuenteLuz luz3;
 	igvMaterial material;
 
-public:
-
-	bool andar;
-	bool saltar;
-
 	bool bbrazos;
 	bool bpiernas;
 
 	int piernas;
 	int brazos;
+
+public:
+
+	bool andar;
+	bool saltar;
 
 	/**
 	* Constructores

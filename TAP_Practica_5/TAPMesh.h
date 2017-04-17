@@ -61,8 +61,6 @@ class TAPMesh{
 
 	bool setNormal;
 
-	TAPVertex posCentral;
-
 
 public:
 
@@ -71,7 +69,7 @@ public:
 	*/
 
 	TAPMesh();
-	TAPMesh(std::vector<TAPVertex> _vertices, std::vector<TAPFace> _caras, TAPVertex _posCentral);
+	TAPMesh(std::vector<TAPVertex> _vertices, std::vector<TAPFace> _caras);
 	
 	/**
 	* Metodos Gets y Sets de cada variable / de la clase
@@ -110,7 +108,14 @@ public:
 	*/
 
 	void drawFace(int i) {
-
+		glBegin(GL_POINTS);
+		for (float i = 0.0f; i < 20; i += 0.1f) {
+			glVertex3d(-i, 0, 0);
+			glVertex3d(i, 0, 0);
+			glVertex3d(0, i, 0);
+			glVertex3d(0, 0, i);
+		}
+		glEnd();
 		//igvMaterial material(igvColor(0.18f, 0.18f, 0.18f), igvColor(0.0f, 0.0f, 0.0f), igvColor(0.5f, 0.5f, 0.5f), 16);
 		//material.aplicar();
 		//*igvFuenteLuz luzf(GL_LIGHT2, igvPunto3D(0, 50, 0), igvColor(1.0f, 1.0f, 1.0f, 1.0f), igvColor(1.0f, 1.0f, 1.0f, 1.0f), igvColor(1.0f, 1.0f, 1.0f, 1.0f), 0.1f, 0.125f, 0.075f, igvPunto3D(0, -50, 0), 25.0, 50);
@@ -128,14 +133,12 @@ public:
 	}
 
 	void rotar(int j, int x, int y, int z, int rot, float R, float G, float B) {
-		std::cout << "ENTRO" << std::endl;
 		
 		GLfloat color[] = { 0, 0, 0};
 		glMaterialfv(GL_FRONT, GL_EMISSION, color);
 		glPointSize(2.5f);
 
 		glBegin(GL_POINTS);
-		glVertex3d(posCentral.getX(), posCentral.getY(), posCentral.getZ());
 		for (float i = 0.0f; i < 20; i += 0.1f) {
 			glVertex3d(-i, 0, 0);
 			glVertex3d(0, i, 0);
@@ -230,10 +233,11 @@ public:
 				glTranslatef(-0.5, 1.15, 1.15);
 				glRotatef(rot, x, y, z);
 				glTranslatef(0.5, -1.15, -1.15);
-				break;
 			case 13:
+				
 				break;
 			case 14:
+
 				break;
 
 			}
@@ -251,6 +255,7 @@ public:
 			glPopMatrix();
 		}
 	}
+
 
 	~TAPMesh();
 };

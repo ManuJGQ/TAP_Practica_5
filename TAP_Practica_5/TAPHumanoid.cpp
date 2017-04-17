@@ -4,15 +4,18 @@
 #include <string>
 #include <iostream>
 
-TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton){
+TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton) {
 	andar = true;
 	saltar = false;
-	
+
+	piernas = 20;
+	brazos = 20;
+
 	//luz = igvFuenteLuz(GL_LIGHT0, igvPunto3D(0.0, 0.0, 0.0), igvColor(0.0, 0.0, 0.0, 1.0), igvColor(0.0, 0.0, 0.0, 1.0), igvColor(0.0, 0.0, 0.0, 1.0), 0.0, 0.0, 0.0);
 	//luz2 = igvFuenteLuz(GL_LIGHT1, igvPunto3D(-60.0, 90.0, 0.0), igvColor(1, 1, 1, 1), igvColor(1, 1, 1, 1), igvColor(1, 1, 1, 1), 0.1f, 0.125f, 0.075f);
 	//luz3 = igvFuenteLuz(GL_LIGHT2, igvPunto3D(30.0, 90.0, -90.0), igvColor(1, 1, 1, 1), igvColor(1, 1, 1, 1), igvColor(1, 1, 1, 1), 0.1f, 0.125f, 0.075f);
-	
-	
+
+
 	luz.encender();
 
 	std::vector<TAPMesh> meshs = std::vector<TAPMesh>();
@@ -26,10 +29,6 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton){
 	std::vector<TAPVertex> vertices;
 	std::vector<std::vector<TAPFace>> caras;
 	std::vector<TAPFace> caras2;
-	std::vector<TAPVertex> posCentrales;
-
-	int numV;
-	float X, Y, Z;
 
 	std::string lineHeader;
 
@@ -39,7 +38,6 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton){
 	if (!archivo.good()) throw std::string("ERROR opening the file");
 
 	vertices = std::vector<TAPVertex>();
-	posCentrales = std::vector<TAPVertex>();
 	caras = std::vector<std::vector<TAPFace>>();
 
 	while (!archivo.eof()) {
@@ -56,25 +54,16 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton){
 				caras2 = std::vector<TAPFace>();
 			}
 			else {
-				posCentrales.push_back(TAPVertex(X / numV, Y / numV, Z / numV));
 				caras.push_back(caras2);
 				caras2 = std::vector<TAPFace>();
 			}
-			numV = 0;
-			X = 0.0f;
-			Y = 0.0f;
-			Z = 0.0f;
 			count++;
 		}
 
 		if (lineHeader == "v") {	//V: Nuevo vertice
 			float x, y, z;
 			archivo >> x >> y >> z;
-			X += x;
-			Y += y;
-			Z += z;
 			vertices.push_back(TAPVertex(x, y, z));
-			numV++;
 		}
 
 		if (lineHeader == "f") {	//F: nueva cara (de 3-4 lados)
@@ -101,12 +90,11 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton){
 		}
 	}
 	caras.push_back(caras2);
-	posCentrales.push_back(TAPVertex(X / numV, Y / numV, Z / numV));
 	archivo.close();
 	for (int i = 0; i < count; i++) {
-		meshs.push_back(TAPMesh(vertices, caras[i], posCentrales[i]));
+		meshs.push_back(TAPMesh(vertices, caras[i]));
 	}
-	
+
 	//LEEMOS EL ESQUELETO
 
 	archivo.open(skeleton);
@@ -174,37 +162,62 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton){
 		count++;
 
 	}
+	std::vector<TAPJoint*> punteros = std::vector<TAPJoint*>();
+	for (int i = 0; i < count; i++) {
+		TAPJoint* p = new TAPJoint(joints[i]);
+		punteros.push_back(p);
+	}
+	std::cout << "FINALIZANDO CARGA" << std::endl;
+	for (int i = 0; i < count; i++) {
+		punteros[i]->setJoints(punteros);
+		joints[i].setJoints(punteros);
+	}
+	std::cout << "CARGA COMPLETA" << std::endl;
 	archivo.close();
 
 }
 
-void TAPHumanoid::drawObjectC(float R, float G, float B){
+void TAPHumanoid::drawObjectC(float R, float G, float B) {
 
 	//luz.aplicar();
 	//igvFuenteLuz luzf(GL_LIGHT2, igvPunto3D(0, 0, 50), igvColor(0.0, 0.0, 0.0, 0.0), igvColor(1.0, 1.0, 1.0, 1.0), igvColor(1.0, 1.0, 1.0, 1.0), 1.0, 0.0, 0.0, igvPunto3D(0, 0, -50), 12.0, 50);
 	//luzf.aplicar();
 	//material.aplicar();
-	for (int i = 0; i < joints.size(); i++) {
-		
-		if (andar && i == 2) {
-			joints[i].aplicarRotacion(i, 20);
-			for (int j = 0; j < joints[i].childrenSize(); j++) {
-				int k = joints[i].getChildren(j);
-				int x = 0, y = 0, z = 0;
-				if (joints[i].rotationAxis == 'X')x++;
-				if (joints[i].rotationAxis == 'Y')y++;
-				if (joints[i].rotationAxis == 'Z')z++;
-				joints[k].aplicarRotacionPadre(k, x, y, z, 20);
-			}
 
+
+	if (andar) {
+		bbrazos = joints[3].aplicarRotacion(3, brazos);
+		joints[4].aplicarRotacion(4, brazos * -1);
+		bpiernas = joints[8].aplicarRotacion(8, piernas);
+		joints[9].aplicarRotacion(9, piernas * -1);
+		for (int i = 0; i < joints.size(); i++) {
+			if (i != 3 && i != 4 && i != 8 
+				&& i != 9 && i != 13 && i != 14 && i != 1)joints[i].drawObjectC();
 		}
-		/*else if(saltar) {
+		if (!bbrazos)brazos *= -1;
+		if (!bpiernas)piernas *= -1;
 
+	}
+	else if (saltar) {
 
-		} else {
-			joints[i].drawObjectC(r, g, b);
-		}*/
+		bbrazos = joints[3].aplicarRotacion(3, brazos);
+		joints[4].aplicarRotacion(4, brazos);
+		bpiernas = joints[8].aplicarRotacion(8, piernas);
+		joints[9].aplicarRotacion(9, piernas);
+		
+		for (int i = 0; i < joints.size(); i++) {
+			if (i != 3 && i != 4 && i != 8
+				&& i != 9 && i != 13 && i != 14 && i != 1)joints[i].drawObjectC();
+		}
+		if (!bbrazos)brazos *= -1;
+		if (!bpiernas)piernas *= -1;
+
+	}
+	else {
+		for (int i = 0; i < joints.size(); i++) {
+			joints[i].drawObjectC();
+		}
 	}
 }
 
-TAPHumanoid::~TAPHumanoid(){}
+TAPHumanoid::~TAPHumanoid() {}

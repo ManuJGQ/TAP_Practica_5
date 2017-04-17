@@ -6,10 +6,9 @@ TAPMesh::TAPMesh(){
 	setNormal = false;
 }
 
-TAPMesh::TAPMesh(std::vector<TAPVertex> _vertices, std::vector<TAPFace> _caras, TAPVertex _posCentral){
+TAPMesh::TAPMesh(std::vector<TAPVertex> _vertices, std::vector<TAPFace> _caras){
 	caras = _caras;
 	vertices = _vertices;
-	posCentral = _posCentral;
 	setNormales();
 }
 
