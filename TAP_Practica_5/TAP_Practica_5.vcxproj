@@ -142,8 +142,6 @@
     <ClCompile Include="TAPSpeedController.cpp" />
     <ClCompile Include="TAPSphericalInterpolation.cpp" />
     <ClCompile Include="TAPStereoscopicCamera.cpp" />
-    <ClCompile Include="TAPTriangle.cpp" />
-    <ClCompile Include="TAPVertex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="igvCamara.h" />
@@ -161,8 +159,6 @@
     <ClInclude Include="TAPSpeedController.h" />
     <ClInclude Include="TAPSphericalInterpolation.h" />
     <ClInclude Include="TAPStereoscopicCamera.h" />
-    <ClInclude Include="TAPTriangle.h" />
-    <ClInclude Include="TAPVertex.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="bezier.txt" />

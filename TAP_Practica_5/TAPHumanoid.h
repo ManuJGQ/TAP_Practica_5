@@ -47,14 +47,14 @@ public:
 		int rot = rotacion + r;
 		if (rot >= rotationLimit2 && rot <= rotationLimit1) {
 			rotacion = rot;
-			mesh.rotar(i, x, y, z, rotacion, R, G, B);
+			mesh.rotar(i, x, y, z, rotacion);
 			for (int j = 0; j < children.size(); j++) {
 				joints[children[j]]->aplicarRotacionPadre(i, x, y, z, rotacion);
 			}
 			return true;
 		}
 		else {
-			mesh.rotar(i, x, y, z, rotacion, R, G, B);
+			mesh.rotar(i, x, y, z, rotacion);
 			for (int j = 0; j < children.size(); j++) {
 				joints[children[j]]->aplicarRotacionPadre(i, x, y, z, rotacion);
 			}
@@ -63,7 +63,7 @@ public:
 	}
 
 	void aplicarRotacionPadre(int i, int x, int y, int z, int r) {
-		mesh.rotar(i, x, y, z, r, R, G, B);
+		mesh.rotar(i, x, y, z, r);
 		for (int j = 0; j < children.size(); j++) {
 			joints[children[j]]->aplicarRotacionPadre(i, x, y, z, r);
 		}
@@ -81,7 +81,7 @@ public:
 	*/
 
 	void drawObjectC() {
-		mesh.drawObjectC(R, G, B);
+		mesh.drawObjectC();
 	};
 
 	~TAPJoint() {};

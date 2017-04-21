@@ -26,9 +26,10 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton) {
 	int count = 0;
 	bool leo = true;
 
-	std::vector<TAPVertex> vertices;
-	std::vector<std::vector<TAPFace>> caras;
-	std::vector<TAPFace> caras2;
+	std::vector<float> vertices;
+	std::vector<float> normales;
+	std::vector<std::vector<int>> caras;
+	std::vector<int> caras2;
 
 	std::string lineHeader;
 
@@ -37,8 +38,11 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton) {
 
 	if (!archivo.good()) throw std::string("ERROR opening the file");
 
-	vertices = std::vector<TAPVertex>();
-	caras = std::vector<std::vector<TAPFace>>();
+	vertices = std::vector<float>();
+	caras = std::vector<std::vector<int>>();
+
+	long int num_vertices = 0;
+	long int num_triangulos = 0;
 
 	while (!archivo.eof()) {
 
@@ -51,11 +55,11 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton) {
 
 		if (lineHeader == "g") {	//G: Nueva malla
 			if (count == 0) {
-				caras2 = std::vector<TAPFace>();
+				caras2 = std::vector<int>();
 			}
 			else {
 				caras.push_back(caras2);
-				caras2 = std::vector<TAPFace>();
+				caras2 = std::vector<int>();
 			}
 			count++;
 		}
@@ -63,7 +67,18 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton) {
 		if (lineHeader == "v") {	//V: Nuevo vertice
 			float x, y, z;
 			archivo >> x >> y >> z;
-			vertices.push_back(TAPVertex(x, y, z));
+			vertices.push_back(x);
+			vertices.push_back(y);
+			vertices.push_back(z);
+			num_vertices++;
+		}
+
+		if (lineHeader == "vn") {	//VN: Nueva normal
+			float x, y, z;
+			archivo >> x >> y >> z;
+			normales.push_back(x);
+			normales.push_back(y);
+			normales.push_back(z);
 		}
 
 		if (lineHeader == "f") {	//F: nueva cara (de 3-4 lados)
@@ -76,8 +91,13 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton) {
 				y = std::stoi(ny.substr(0, ny.find('//')));
 				z = std::stoi(nz.substr(0, nz.find('//')));
 				w = std::stoi(nw.substr(0, nw.find('//')));
-				caras2.push_back(TAPFace(x, y, w));
-				caras2.push_back(TAPFace(w, y, z));
+				caras2.push_back(x - 1);
+				caras2.push_back(y - 1);
+				caras2.push_back(w - 1);
+				caras2.push_back(w - 1);
+				caras2.push_back(y - 1);
+				caras2.push_back(z - 1);
+				num_triangulos += 2;
 			}
 			else {										//3 lados
 				leo = false;
@@ -85,14 +105,17 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton) {
 				x = std::stoi(nx.substr(0, nx.find('//')));
 				y = std::stoi(ny.substr(0, ny.find('//')));
 				z = std::stoi(nz.substr(0, nz.find('//')));
-				caras2.push_back(TAPFace(x, y, z));
+				caras2.push_back(x - 1);
+				caras2.push_back(y - 1);
+				caras2.push_back(z - 1);
+				num_triangulos++;
 			}
 		}
 	}
 	caras.push_back(caras2);
 	archivo.close();
 	for (int i = 0; i < count; i++) {
-		meshs.push_back(TAPMesh(vertices, caras[i]));
+		meshs.push_back(TAPMesh(num_vertices, num_triangulos,vertices, normales, caras[i]));
 	}
 
 	//LEEMOS EL ESQUELETO

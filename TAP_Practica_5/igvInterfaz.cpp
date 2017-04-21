@@ -301,8 +301,6 @@ void igvInterfaz::set_glutIdleFunc() {
 		//Quaternion nuevoGiro = interfaz.sphericalInterpolation.getPosicionInterpolada(interfaz.twist * interfaz.sphericalInterpolation.getUltimoT());
 
 		//interfaz.escena.setGiro(nuevoGiro);
-
-		glutPostRedisplay();
 	}
 }
 
