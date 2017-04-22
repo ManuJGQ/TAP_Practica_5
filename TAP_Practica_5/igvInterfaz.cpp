@@ -6,6 +6,8 @@
 #include "igvInterfaz.h"
 #include "TAPMesh.h"
 
+#include <windows.h>
+
 
 extern igvInterfaz interfaz; // los callbacks deben ser estaticos y se requiere este objeto para acceder desde
 							 // ellos a las variables de la clase
@@ -240,8 +242,9 @@ void igvInterfaz::set_glutDisplayFunc() {
 
 	//	if (interfaz.anaglifo)glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 	//}
+	Sleep(50);
 
-	interfaz.vader.drawObjectC(0.0f, 0.0f, 0.0f);
+	interfaz.vader.drawObjectC();
 
 	// refresca la ventana
 	glutSwapBuffers();

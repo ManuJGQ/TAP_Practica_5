@@ -47,41 +47,42 @@ public:
 		int rot = rotacion + r;
 		if (rot >= rotationLimit2 && rot <= rotationLimit1) {
 			rotacion = rot;
-			mesh.rotar(i, x, y, z, rotacion);
+			mesh.rotar(i,i, x, y, z, rotacion);
 			for (int j = 0; j < children.size(); j++) {
-				joints[children[j]]->aplicarRotacionPadre(i, x, y, z, rotacion);
+				joints[children[j]]->aplicarRotacionPadre(i, children[j], x, y, z, rotacion);
 			}
 			return true;
 		}
 		else {
-			mesh.rotar(i, x, y, z, rotacion);
+			mesh.rotar(i, i, x, y, z, rotacion);
 			for (int j = 0; j < children.size(); j++) {
-				joints[children[j]]->aplicarRotacionPadre(i, x, y, z, rotacion);
+				joints[children[j]]->aplicarRotacionPadre(i, children[j], x, y, z, rotacion);
 			}
 			return false;
 		}
 	}
 
-	void aplicarRotacionPadre(int i, int x, int y, int z, int r) {
-		mesh.rotar(i, x, y, z, r);
+	void aplicarRotacionPadre(int i,int j, int _x, int _y, int _z, int r) {
+		mesh.rotar(i, j, _x, _y, _z, r);
 		for (int j = 0; j < children.size(); j++) {
-			joints[children[j]]->aplicarRotacionPadre(i, x, y, z, r);
+			joints[children[j]]->aplicarRotacionPadre(i, children[j], _x, _y, _z, r);
 		}
 	}
 
-	void aplicarTraslacion(int x, int y, int z) {
-		glTranslatef(x, y, z);
-		for (int j = 0; j < children.size(); j++) {
-			joints[children[j]]->aplicarTraslacion(x, y, z);
-		}
+	void aplicarTraslacion(int _x, int _y, int _z) {
+		mesh.trasladar(_x, _y, _z);
+		/*for (int j = 0; j < children.size(); j++) {
+			std::cout << children[j] << std::endl;
+			joints[children[j]]->aplicarTraslacion(_x, _y, _z);
+		}*/
 	}
 
 	/**
 	* Funcion encargada de pintar la malla
 	*/
 
-	void drawObjectC() {
-		mesh.drawObjectC();
+	void drawObjectC(int i) {
+		mesh.drawObjectC(i);
 	};
 
 	~TAPJoint() {};
@@ -119,7 +120,7 @@ public:
 	* Funcion encargada de pintar la malla
 	*/
 
-	void drawObjectC(float R, float G, float B);
+	void drawObjectC();
 
 	~TAPHumanoid();
 };

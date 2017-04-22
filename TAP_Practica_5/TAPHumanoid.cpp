@@ -41,9 +41,6 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton) {
 	vertices = std::vector<float>();
 	caras = std::vector<std::vector<int>>();
 
-	long int num_vertices = 0;
-	long int num_triangulos = 0;
-
 	while (!archivo.eof()) {
 
 		if (leo) {
@@ -70,7 +67,6 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton) {
 			vertices.push_back(x);
 			vertices.push_back(y);
 			vertices.push_back(z);
-			num_vertices++;
 		}
 
 		if (lineHeader == "vn") {	//VN: Nueva normal
@@ -97,7 +93,16 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton) {
 				caras2.push_back(w - 1);
 				caras2.push_back(y - 1);
 				caras2.push_back(z - 1);
-				num_triangulos += 2;
+				/*std::cout << "------CARA CUADRADA-------" << std::endl;
+				std::cout << "------ TRIANGULO 1 -------" << std::endl;
+				std::cout << vertices[x] << vertices[x] + 1 << vertices[x] + 2 << std::endl;
+				std::cout << vertices[y] << vertices[y] + 1 << vertices[y] + 2 << std::endl;
+				std::cout << vertices[w] << vertices[w] + 1 << vertices[w] + 2 << std::endl;
+				std::cout << "------ TRIANGULO 2 -------" << std::endl;
+				std::cout << vertices[w] << vertices[w] + 1 << vertices[w] + 2 << std::endl;
+				std::cout << vertices[y] << vertices[y] + 1 << vertices[y] + 2 << std::endl;
+				std::cout << vertices[z] << vertices[z] + 1 << vertices[z] + 2 << std::endl;
+				std::cout << "--------------------------" << std::endl;*/
 			}
 			else {										//3 lados
 				leo = false;
@@ -108,14 +113,13 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton) {
 				caras2.push_back(x - 1);
 				caras2.push_back(y - 1);
 				caras2.push_back(z - 1);
-				num_triangulos++;
 			}
 		}
 	}
 	caras.push_back(caras2);
 	archivo.close();
 	for (int i = 0; i < count; i++) {
-		meshs.push_back(TAPMesh(num_vertices, num_triangulos,vertices, normales, caras[i]));
+		meshs.push_back(TAPMesh(vertices, normales, caras[i]));
 	}
 
 	//LEEMOS EL ESQUELETO
@@ -200,7 +204,7 @@ TAPHumanoid::TAPHumanoid(std::string object, std::string skeleton) {
 
 }
 
-void TAPHumanoid::drawObjectC(float R, float G, float B) {
+void TAPHumanoid::drawObjectC() {
 
 	//luz.aplicar();
 	//igvFuenteLuz luzf(GL_LIGHT2, igvPunto3D(0, 0, 50), igvColor(0.0, 0.0, 0.0, 0.0), igvColor(1.0, 1.0, 1.0, 1.0), igvColor(1.0, 1.0, 1.0, 1.0), 1.0, 0.0, 0.0, igvPunto3D(0, 0, -50), 12.0, 50);
@@ -213,15 +217,31 @@ void TAPHumanoid::drawObjectC(float R, float G, float B) {
 		joints[4].aplicarRotacion(4, brazos * -1);
 		bpiernas = joints[8].aplicarRotacion(8, piernas);
 		joints[9].aplicarRotacion(9, piernas * -1);
+		joints[7].aplicarRotacion(7, piernas);
 		for (int i = 0; i < joints.size(); i++) {
 			if (i != 3 && i != 4 && i != 8 
-				&& i != 9 && i != 13 && i != 14 && i != 1)joints[i].drawObjectC();
+				&& i != 9 && i != 13 && i != 14 && i != 1 && i != 7 && i != 5 && i != 0)joints[i].drawObjectC(i);
 		}
 		if (!bbrazos)brazos *= -1;
 		if (!bpiernas)piernas *= -1;
 
 	}
 	else if (saltar) {
+		joints[0].aplicarTraslacion(0, piernas / abs(piernas), 0);
+		joints[1].aplicarTraslacion(0, piernas / abs(piernas), 0);
+		joints[2].aplicarTraslacion(0, piernas / abs(piernas), 0);
+		joints[3].aplicarTraslacion(0, piernas / abs(piernas), 0);
+		joints[4].aplicarTraslacion(0, piernas / abs(piernas), 0);
+		joints[5].aplicarTraslacion(0, piernas / abs(piernas), 0);
+		joints[6].aplicarTraslacion(0, piernas / abs(piernas), 0);
+		joints[7].aplicarTraslacion(0, piernas / abs(piernas), 0);
+		joints[8].aplicarTraslacion(0, piernas / abs(piernas), 0);
+		joints[9].aplicarTraslacion(0, piernas / abs(piernas), 0);
+		joints[10].aplicarTraslacion(0, piernas / abs(piernas), 0);
+		joints[11].aplicarTraslacion(0, piernas / abs(piernas), 0);
+		joints[12].aplicarTraslacion(0, piernas / abs(piernas), 0);
+		joints[13].aplicarTraslacion(0, piernas / abs(piernas), 0);
+		joints[14].aplicarTraslacion(0, piernas / abs(piernas), 0);
 
 		bbrazos = joints[3].aplicarRotacion(3, brazos);
 		joints[4].aplicarRotacion(4, brazos);
@@ -230,7 +250,7 @@ void TAPHumanoid::drawObjectC(float R, float G, float B) {
 		
 		for (int i = 0; i < joints.size(); i++) {
 			if (i != 3 && i != 4 && i != 8
-				&& i != 9 && i != 13 && i != 14 && i != 1)joints[i].drawObjectC();
+				&& i != 9 && i != 13 && i != 14 && i != 1)joints[i].drawObjectC(i);
 		}
 		if (!bbrazos)brazos *= -1;
 		if (!bpiernas)piernas *= -1;
@@ -238,7 +258,7 @@ void TAPHumanoid::drawObjectC(float R, float G, float B) {
 	}
 	else {
 		for (int i = 0; i < joints.size(); i++) {
-			joints[i].drawObjectC();
+			joints[i].drawObjectC(i);
 		}
 	}
 }
