@@ -186,7 +186,7 @@ void igvInterfaz::set_glutKeyboardFunc(unsigned char key, int x, int y) {
 		exit(1);
 		break;
 	}
-	glutPostRedisplay(); // renueva el contenido de la ventana de vision
+	//glutPostRedisplay(); // renueva el contenido de la ventana de vision
 }
 
 void igvInterfaz::set_glutReshapeFunc(int w, int h) {
