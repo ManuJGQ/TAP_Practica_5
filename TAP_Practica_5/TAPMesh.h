@@ -59,6 +59,15 @@ public:
 		if (sum == 0)sum = 1;
 	}
 
+	void trasladarhijo(float x, float y, float z) {
+		X2 = x;
+		Y2 = y;
+		Z2 = z;
+		trans = true;
+
+		if (sum == 0)sum = 1;
+	}
+
 	void desaplicartranslacion() {
 		X = 0;
 		Y = 0;
@@ -97,19 +106,21 @@ public:
 
 		glEnable(GL_LIGHT0);
 
-		glBegin(GL_POINTS);
-		for (float i = 0.0f; i < 20; i += 0.1f) {
-			glVertex3d(-i, 0, 0);
-			glVertex3d(0, i, 0);
-			glVertex3d(0, 0, i);
-		}
-		glEnd();
+		//glBegin(GL_POINTS);
+		//for (float i = 0.0f; i < 20; i += 0.1f) {
+		//	glVertex3d(-i, 0, 0);
+		//	glVertex3d(0, i, 0);
+		//	glVertex3d(0, 0, i);
+		//}
+		//glEnd();
 
 		glPushMatrix();
 			
+		std::cout << Y << " - " << Y2 << std::endl;
+
 			if (trans){
-				if (Y == 3 && Y2 != 3 && sum == 1)sum = -1;
-				if (Y == -5 && Y2 != -5 && sum == -1)sum = 1;
+				if (Y == 5 && Y2 != 5 && sum == 1)sum = -1;
+				if (Y == -4 && Y2 != -4 && sum == -1)sum = 1;
 			}
 
 			switch (j) {

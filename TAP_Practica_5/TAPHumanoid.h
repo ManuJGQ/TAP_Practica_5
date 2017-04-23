@@ -62,6 +62,10 @@ public:
 		}
 	}
 
+	void resetarRotacion() {
+		rotacion = 0;
+	}
+
 	void aplicarRotacionPadre(int i,int j, int _x, int _y, int _z, int r) {
 		mesh.rotar(i, j, _x, _y, _z, r);
 		for (int j = 0; j < children.size(); j++) {
@@ -71,14 +75,22 @@ public:
 
 	void aplicarTraslacion(float _x, float _y, float _z) {
 		mesh.trasladar(_x, _y, _z);
-		/*for (int j = 0; j < children.size(); j++) {
+		for (int j = 0; j < children.size(); j++) {
 			std::cout << children[j] << std::endl;
-			joints[children[j]]->aplicarTraslacion(_x, _y, _z);
-		}*/
+			joints[children[j]]->aplicarTraslacionPadre(_x, _y, _z);
+		}
+	}
+
+	void aplicarTraslacionPadre(float _x, float _y, float _z) {
+		mesh.trasladar(_x, _y, _z);
 	}
 
 	void desaplicartranslacion() {
 		mesh.desaplicartranslacion();
+		for (int j = 0; j < children.size(); j++) {
+			std::cout << children[j] << std::endl;
+			joints[children[j]]->desaplicartranslacion();
+		}
 	}
 
 	/**
@@ -108,10 +120,10 @@ class TAPHumanoid {
 	int piernas;
 	int brazos;
 
-public:
-
 	bool andar;
 	bool saltar;
+
+public:
 
 	/**
 	* Constructores
@@ -125,6 +137,54 @@ public:
 	*/
 
 	void drawObjectC();
+
+	void activatSaltar() {
+		joints[0].resetarRotacion();
+		joints[1].resetarRotacion();
+		joints[2].resetarRotacion();
+		joints[3].resetarRotacion();
+		joints[4].resetarRotacion();
+		joints[5].resetarRotacion();
+		joints[6].resetarRotacion();
+		joints[7].resetarRotacion();
+		joints[8].resetarRotacion();
+		joints[9].resetarRotacion();
+		joints[10].resetarRotacion();
+		joints[11].resetarRotacion();
+		joints[12].resetarRotacion();
+		joints[13].resetarRotacion();
+		joints[14].resetarRotacion();
+		saltar = true;
+		andar = false;
+		piernas = 20;
+		brazos = 20;
+		bbrazos = true;
+		bpiernas = true;
+	}
+
+	void activatAndar() {
+		joints[0].resetarRotacion();
+		joints[1].resetarRotacion();
+		joints[2].resetarRotacion();
+		joints[3].resetarRotacion();
+		joints[4].resetarRotacion();
+		joints[5].resetarRotacion();
+		joints[6].resetarRotacion();
+		joints[7].resetarRotacion();
+		joints[8].resetarRotacion();
+		joints[9].resetarRotacion();
+		joints[10].resetarRotacion();
+		joints[11].resetarRotacion();
+		joints[12].resetarRotacion();
+		joints[13].resetarRotacion();
+		joints[14].resetarRotacion();
+		saltar = false;
+		andar = true;
+		piernas = 20;
+		brazos = 20;
+		bbrazos = true;
+		bpiernas = true;
+	}
 
 	~TAPHumanoid();
 };

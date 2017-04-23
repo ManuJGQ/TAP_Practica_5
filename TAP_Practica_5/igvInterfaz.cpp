@@ -166,18 +166,18 @@ void igvInterfaz::set_glutKeyboardFunc(unsigned char key, int x, int y) {
 		interfaz.camara.set_d0(interfaz.d0);
 		interfaz.camara.set(interfaz.get_vistas(interfaz.i), igvPunto3D(0, 0, 0), interfaz.get_va(), interfaz.tc);
 		break;*/
-	case 'M':
-	case 'm': 
-		if(!interfaz.vader.andar)interfaz.vader.saltar = !interfaz.vader.saltar;
+	case 's':
+	case 'S': 
+		interfaz.vader.activatSaltar();
 		break;
 	case 'A':
 	case 'a': // activa/desactiva la animación de la escena
 	// incluir aquí la activación de la animación
 		interfaz.animacion = (interfaz.animacion ? false : true);
 		break;
-	case 'B':
-	case 'b':
-		if(!interfaz.vader.saltar)interfaz.vader.andar = !interfaz.vader.andar;
+	case 'W':
+	case 'w':
+		interfaz.vader.activatAndar();
 		break;
 	case 'e': // activa/desactiva la visualizacion de los ejes
 		interfaz.escena.set_ejes(interfaz.escena.get_ejes() ? false : true);
