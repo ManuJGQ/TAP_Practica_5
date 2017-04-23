@@ -25,7 +25,13 @@ class TAPMesh {
 	float Y2;
 	float Z2;
 
+	int sum;
+
+	
+
 public:
+
+	bool trans;
 
 	/**
 	* Constructores
@@ -48,6 +54,23 @@ public:
 		X2 += x;
 		Y2 += y;
 		Z2 += z;
+		trans = true;
+
+		if (sum == 0)sum = 1;
+	}
+
+	void desaplicartranslacion() {
+		X = 0;
+		Y = 0;
+		Z = 0;
+
+		X2 = 0;
+		Y2 = 0;
+		Z2 = 0;
+
+		trans = false;
+
+		sum = 0;
 	}
 
 	void rotar(int j, int k, int x, int y, int z, int rot) {
@@ -83,42 +106,55 @@ public:
 		glEnd();
 
 		glPushMatrix();
+			
+			if (trans){
+				if (Y == 3 && Y2 != 3 && sum == 1)sum = -1;
+				if (Y == -5 && Y2 != -5 && sum == -1)sum = 1;
+			}
 
-		
 			switch (j) {
 			case 2:
-				glTranslatef(-0.9 + X, 1.15 + Y, 1.15 + Z);
+				glTranslatef(X, Y + sum, Z);
+				glTranslatef(-0.9, 1.15 , 1.15);
 				glRotatef(rot, x, y, z);
-				glTranslatef(0.9 - X, -1.15 - Z, -1.15 - Z);
+				glTranslatef(0.9, -1.15 , -1.15);
+
 				break;
 			case 3:
-				glTranslatef(-1.75 + X, 2.6 + Y, 1.25 + Z);
+				glTranslatef(X, Y + sum, Z);
+				glTranslatef(-1.75, 2.6, 1.25);
 				glRotatef(rot, x, y, z);
-				glTranslatef(1.75 - X,-2.6 - Y, -1.25 - Z);
+				glTranslatef(1.75,-2.6 , -1.25);
+
 				break;
 			case 4:
-				glTranslatef(-0.15 + X, 2.6 + Y, 1.15 + Z);
+				glTranslatef(X, Y + sum, Z);
+				glTranslatef(-0.15, 2.6, 1.15);
 				glRotatef(rot, x, y, z);
-				glTranslatef(0.15 - X, -2.6 - Y, -1.15 - Z);
+				glTranslatef(0.15, -2.6, -1.15);
+
 				break;
 			case 7:
-				glTranslatef(-0.9 + X, 3.0 + Y, 1.15 + Z);
+				glTranslatef(X, Y + sum, Z);
+				glTranslatef(-0.9, 3.0, 1.15);
 				glRotatef(rot, x, y, z);
-				glTranslatef(0.9 - X, -3.0 - Y, -1.15 - Z);
+				glTranslatef(0.9, -3.0, -1.15);
+
 				break;
 			case 8:
-				glTranslatef(0, Y, 0);
+				glTranslatef(X, Y + sum, Z);
 				glTranslatef(-1.15, 1.15, 1.15);
 				glRotatef(rot, x, y, z);
 				glTranslatef(1.15, -1.15, -1.15);
-				glTranslatef(0, Y * -1, 0);
+
 				break;
 			case 9:
-				glTranslatef(0, Y, 0);
+				glTranslatef(X, Y + sum, Z);
 				glTranslatef(-0.5, 1.15, 1.15);
 				glRotatef(rot, x, y, z);
 				glTranslatef(0.5, -1.15 , -1.15);
-				glTranslatef(0, Y * -1, 0);
+				//glTranslatef(-X, -Y, -Z);
+
 			case 13:
 
 				break;
@@ -127,8 +163,7 @@ public:
 				break;
 
 			}
-
-			glTranslatef(X2, Y2, Z2);
+			
 			X = X2;
 			Y = Y2;
 			Z = Z2;

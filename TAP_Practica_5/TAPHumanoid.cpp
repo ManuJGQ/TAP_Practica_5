@@ -213,6 +213,22 @@ void TAPHumanoid::drawObjectC() {
 
 
 	if (andar) {
+		joints[0].desaplicartranslacion();
+		joints[1].desaplicartranslacion();
+		joints[2].desaplicartranslacion();
+		joints[3].desaplicartranslacion();
+		joints[4].desaplicartranslacion();
+		joints[5].desaplicartranslacion();
+		joints[6].desaplicartranslacion();
+		joints[7].desaplicartranslacion();
+		joints[8].desaplicartranslacion();
+		joints[9].desaplicartranslacion();
+		joints[10].desaplicartranslacion();
+		joints[11].desaplicartranslacion();
+		joints[12].desaplicartranslacion();
+		joints[13].desaplicartranslacion();
+		joints[14].desaplicartranslacion();
+
 		bbrazos = joints[3].aplicarRotacion(3, brazos);
 		joints[4].aplicarRotacion(4, brazos * -1);
 		bpiernas = joints[8].aplicarRotacion(8, piernas);
@@ -220,28 +236,28 @@ void TAPHumanoid::drawObjectC() {
 		joints[7].aplicarRotacion(7, piernas);
 		for (int i = 0; i < joints.size(); i++) {
 			if (i != 3 && i != 4 && i != 8 
-				&& i != 9 && i != 13 && i != 14 && i != 1 && i != 7 && i != 5 && i != 0)joints[i].drawObjectC(i);
+				&& i != 9 && i != 13 && i != 14 && i != 1 && i != 7 && i != 6 && i != 0)joints[i].drawObjectC(i);
 		}
 		if (!bbrazos)brazos *= -1;
 		if (!bpiernas)piernas *= -1;
 
 	}
 	else if (saltar) {
-		joints[0].aplicarTraslacion(0, piernas / abs(piernas), 0);
-		joints[1].aplicarTraslacion(0, piernas / abs(piernas), 0);
-		joints[2].aplicarTraslacion(0, piernas / abs(piernas), 0);
-		joints[3].aplicarTraslacion(0, piernas / abs(piernas), 0);
-		joints[4].aplicarTraslacion(0, piernas / abs(piernas), 0);
-		joints[5].aplicarTraslacion(0, piernas / abs(piernas), 0);
-		joints[6].aplicarTraslacion(0, piernas / abs(piernas), 0);
-		joints[7].aplicarTraslacion(0, piernas / abs(piernas), 0);
-		joints[8].aplicarTraslacion(0, piernas / abs(piernas), 0);
-		joints[9].aplicarTraslacion(0, piernas / abs(piernas), 0);
-		joints[10].aplicarTraslacion(0, piernas / abs(piernas), 0);
-		joints[11].aplicarTraslacion(0, piernas / abs(piernas), 0);
-		joints[12].aplicarTraslacion(0, piernas / abs(piernas), 0);
-		joints[13].aplicarTraslacion(0, piernas / abs(piernas), 0);
-		joints[14].aplicarTraslacion(0, piernas / abs(piernas), 0);
+		joints[0].aplicarTraslacion(0, abs((float)piernas / (float)abs(piernas)), 0);
+		joints[1].aplicarTraslacion(0, abs((float)piernas / (float)abs(piernas)), 0);
+		joints[2].aplicarTraslacion(0, abs((float)piernas / (float)abs(piernas)), 0);
+		joints[3].aplicarTraslacion(0, abs((float)piernas / (float)abs(piernas)), 0);
+		joints[4].aplicarTraslacion(0, abs((float)piernas / (float)abs(piernas)), 0);
+		joints[5].aplicarTraslacion(0, abs((float)piernas / (float)abs(piernas)), 0);
+		joints[6].aplicarTraslacion(0, abs((float)piernas / (float)abs(piernas)), 0);
+		joints[7].aplicarTraslacion(0, abs((float)piernas / (float)abs(piernas)), 0);
+		joints[8].aplicarTraslacion(0, abs((float)piernas / (float)abs(piernas)), 0);
+		joints[9].aplicarTraslacion(0, abs((float)piernas / (float)abs(piernas)), 0);
+		joints[10].aplicarTraslacion(0, abs((float)piernas / (float)abs(piernas)), 0);
+		joints[11].aplicarTraslacion(0, abs((float)piernas / (float)abs(piernas)), 0);
+		joints[12].aplicarTraslacion(0, abs((float)piernas / (float)abs(piernas)), 0);
+		joints[13].aplicarTraslacion(0, abs((float)piernas / (float)abs(piernas)), 0);
+		joints[14].aplicarTraslacion(0, abs((float)piernas / (float)abs(piernas)), 0);
 
 		bbrazos = joints[3].aplicarRotacion(3, brazos);
 		joints[4].aplicarRotacion(4, brazos);

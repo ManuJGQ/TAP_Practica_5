@@ -11,6 +11,10 @@ TAPMesh::TAPMesh(){
 	X2 = 0;
 	Y2 = 0;
 	Z2 = 0;
+
+	sum = 0;
+
+	trans = false;
 }
 
 TAPMesh::TAPMesh(std::vector<float> _vertices, std::vector<float> _normales, std::vector<int> _caras){
@@ -40,6 +44,10 @@ TAPMesh::TAPMesh(std::vector<float> _vertices, std::vector<float> _normales, std
 	X2 = 0;
 	Y2 = 0;
 	Z2 = 0;
+
+	sum = 0;
+
+	trans = false;
 }
 
 void TAPMesh::drawObjectC(int j) {

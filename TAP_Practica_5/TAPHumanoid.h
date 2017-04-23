@@ -69,12 +69,16 @@ public:
 		}
 	}
 
-	void aplicarTraslacion(int _x, int _y, int _z) {
+	void aplicarTraslacion(float _x, float _y, float _z) {
 		mesh.trasladar(_x, _y, _z);
 		/*for (int j = 0; j < children.size(); j++) {
 			std::cout << children[j] << std::endl;
 			joints[children[j]]->aplicarTraslacion(_x, _y, _z);
 		}*/
+	}
+
+	void desaplicartranslacion() {
+		mesh.desaplicartranslacion();
 	}
 
 	/**
