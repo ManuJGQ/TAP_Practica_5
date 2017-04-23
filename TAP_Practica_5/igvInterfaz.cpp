@@ -280,7 +280,7 @@ void igvInterfaz::set_glutIdleFunc() {
 		//	interfaz.pt = 0.0f;
 		//}
 
-		///*std::cout << interfaz.pt << std::endl;
+		//std::cout << interfaz.pt << std::endl;
 		//std::cout << nuevoPunto.x << " " << nuevoPunto.y << " " << nuevoPunto.z << std::endl;*/
 
 		//Punto movimiento;
@@ -304,6 +304,7 @@ void igvInterfaz::set_glutIdleFunc() {
 		//Quaternion nuevoGiro = interfaz.sphericalInterpolation.getPosicionInterpolada(interfaz.twist * interfaz.sphericalInterpolation.getUltimoT());
 
 		//interfaz.escena.setGiro(nuevoGiro);
+		glutPostRedisplay();
 	}
 }
 
